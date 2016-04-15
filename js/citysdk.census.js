@@ -6,9 +6,18 @@
  *
  */
 
+// Import CitySDK as a module.
+var CitySDK = require('./citysdk');
+var $ = require('jquery');
+var jQuery = $;
+
+// Export the census module
+module.exports = CensusModule;
+
 //Attach a new module object to the CitySDK prototype.
 //It is advised to keep the filenames and module property names the same
-CitySDK.prototype.modules.census = new CensusModule();
+// CitySDK.prototype.modules.census = new CensusModule();
+
 /**
  * Instantiates an instance of the CitySDK Census module.
  * @constructor
@@ -1091,18 +1100,18 @@ CensusModule.prototype.APIRequest = function (requestIn, callback) {
                             currentResponseItem = response[i];
                             if(['sf1','sf3'].indexOf(request.api) && request.year.toString() == "1990") {
                                 // Hardcoded rule for decennial survey of 1990
-                                currentDataObject["name"] = currentResponseItem[window.jQuery.inArray("ANPSADPI", response[0])];
+                                currentDataObject["name"] = currentResponseItem[jQuery.inArray("ANPSADPI", response[0])];
                             }else{
                                 // ACS survey & SF survey not 1990
-                                currentDataObject["name"] = currentResponseItem[window.jQuery.inArray("NAME", response[0])];
+                                currentDataObject["name"] = currentResponseItem[jQuery.inArray("NAME", response[0])];
                             }
 
 
-                            var stateIndex = window.jQuery.inArray("state", response[0]);
-                            var countyIndex = window.jQuery.inArray("county", response[0]);
-                            var tractIndex = window.jQuery.inArray("tract", response[0]);
-                            var blockGroupIndex = window.jQuery.inArray("block group", response[0]);
-                            var placeIndex = window.jQuery.inArray("place", response[0]);
+                            var stateIndex = jQuery.inArray("state", response[0]);
+                            var countyIndex = jQuery.inArray("county", response[0]);
+                            var tractIndex = jQuery.inArray("tract", response[0]);
+                            var blockGroupIndex = jQuery.inArray("block group", response[0]);
+                            var placeIndex = jQuery.inArray("place", response[0]);
 
                             if (stateIndex >= 0) {
                                 currentDataObject["state"] = currentResponseItem[stateIndex];
@@ -1127,14 +1136,14 @@ CensusModule.prototype.APIRequest = function (requestIn, callback) {
                             for (var j = 0; j < request.variables.length; j++) {
 
                                     currentVariable = request.variables[j];
-                                    var intermediateVar = currentResponseItem[window.jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable(currentVariable,request.api,request.year), response[0])];
+                                    var intermediateVar = currentResponseItem[jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable(currentVariable,request.api,request.year), response[0])];
                                     if(intermediateVar){
                                         currentDataObject[currentVariable] = intermediateVar;
                                     }
 
                                 //Variable is Normalizeable
                                     if (intermediateVar && CitySDK.prototype.sdkInstance.modules.census.isNormalizable(currentVariable) && CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable("population",request.api,request.year) !== false) {
-                                        currentDataObject[currentVariable + "_normalized"] =currentDataObject[currentVariable] /  currentResponseItem[window.jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable("population",request.api,request.year), response[0])];
+                                        currentDataObject[currentVariable + "_normalized"] =currentDataObject[currentVariable] /  currentResponseItem[jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable("population",request.api,request.year), response[0])];
                                     }
 
                             }
@@ -1148,12 +1157,12 @@ CensusModule.prototype.APIRequest = function (requestIn, callback) {
                         for (var i = 0; i < request.variables.length; i++) {
                             currentVariable = request.variables[i];
                             if(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable(currentVariable,request.api,request.year)!== false){
-                                currentDataObject[currentVariable] = response[1][window.jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable(currentVariable,request.api,request.year), response[0])];
+                                currentDataObject[currentVariable] = response[1][jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable(currentVariable,request.api,request.year), response[0])];
                             }
 
 
                             if (currentDataObject[currentVariable] && CitySDK.prototype.sdkInstance.modules.census.isNormalizable(currentVariable) && CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable("population",request.api,request.year) !== false) {
-                                currentDataObject[currentVariable + "_normalized"] = currentDataObject[currentVariable] / response[1][window.jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable("population",request.api,request.year), response[1])];
+                                currentDataObject[currentVariable + "_normalized"] = currentDataObject[currentVariable] / response[1][jQuery.inArray(CitySDK.prototype.sdkInstance.modules.census.parseToValidVariable("population",request.api,request.year), response[1])];
                             }
 
                             //Move it into an array for consistency
@@ -1335,7 +1344,7 @@ CensusModule.prototype.GEORequest = function (requestIn, callback) {
                 for (var i = 0; i < features.length; i++) {
                     matchedFeature = null;
                     //TODO: We need to tidy this grep up a bit.
-                    matchedFeature = window.jQuery.grep(data, function (e) {
+                    matchedFeature = jQuery.grep(data, function (e) {
                         //Ensure we have a direct match for low level items by comparing the higher level items
                         if (request.level == "blockGroup" || request.level == "tract") {
                             return e[request.level] == features[i].properties[comparisonVariables[request.level]] &&

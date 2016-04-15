@@ -4,6 +4,11 @@
  * @overview This is the core library for the CitySDK.  It houses the ajax mechanics, the caching system, and global data sets (such as state capitals and their coordinate points)
  */
 
+var $ = require('jquery');
+var jQuery = $;
+
+// Export CitySDK for usage with requirejs
+module.exports = CitySDK;
 
 //SDK instance for the callback functions
 CitySDK.prototype.sdkInstance = null;
@@ -75,6 +80,26 @@ CitySDK.prototype.CitySDKdb;
  * @type {object}
  */
 CitySDK.prototype.modules = {};
+
+/**
+ * Load a module for usage with CitySDK
+ * @param {array} modules List of modules to load
+ * @return {boolean} True if the loading was successful
+ */
+// CitySDK.prototype.loadModules = function (modules) {
+// 	var loadedModules = [];
+// 	modules.forEach(function (module) {
+// 		loadedModules.push(require(module))
+// 	});
+// 	var allLoaded = loadedModules.every(function (loadedModule) {
+// 		return typeof loadedModule === 'function';
+//   };
+// 	if (modules.length === loadedModules.length && allLoaded) {
+// 		loadedModules.forEach(function (loadedModule) {
+// 			//CitySDK.prototype
+// 		});
+// 	}
+// };
 
 
 // Polyfills
