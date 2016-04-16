@@ -1,6 +1,6 @@
 {
   "name": "citysdk",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "CitySDK as a node module",
   "main": "js/index.js",
   "directories": {
@@ -15,8 +15,8 @@
     "type": "git",
     "url": "https://github.com/pl12133/citysdk/"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "pl12133",
+  "license": "MIT",
   "dependencies": {
     "jquery": "^2.2.3",
     "terraformer": "^1.0.5"

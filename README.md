@@ -12,6 +12,7 @@ Source code can be found in the js directory.
 
 **Make a API Request**:
 
+```js
 import CitySDK, { modules } from 'citysdk';
 let sdk = new CitySDK();
 sdk.modules.census = new modules.CensusModule();
@@ -33,7 +34,7 @@ if (isCensusEnabled) {
 		console.log(response);
 	});
 }
-
+```
 
 ## Intro
 
