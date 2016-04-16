@@ -8,6 +8,33 @@ Generated jsDocs can be found in the docs directory.
 
 Source code can be found in the js directory.
 
+###### This fork intends to convert CitySDK to an npm module. Currently only the census module is supported. 
+
+**Make a API Request**:
+
+import CitySDK, { modules } from 'citysdk';
+let sdk = new CitySDK();
+sdk.modules.census = new modules.CensusModule();
+sdk.modules.census.APIRequest = sdk.modules.census.APIRequest.bind(sdk.modules.census);
+let isCensusEnabled = sdk.modules.census.enable('My Census API Key')
+
+const request = {
+		level: "state",
+		state: "CA",
+		variables: [
+				"income",
+				"population",
+				"median_male_age"
+		]
+};
+if (isCensusEnabled) {
+	console.log('Census Enabled, Requesting Data');
+	sdk.modules.census.APIRequest(request, function (response) {
+		console.log(response);
+	});
+}
+
+
 ## Intro
 
 Through our City SDK, we are aiming to provide a user-friendly "toolbox" for civic hackers to connect local and national public data. The creation of the SDK came out of the desire to make it easier to use the Census API for common tasks that our developer community asked for. We have been engaging developers around the country for the past two years and have observed how they use the API and have built the most commonly needed functionalities built on top of our API right into the SDK, saving the developer from having to do it herself. 
